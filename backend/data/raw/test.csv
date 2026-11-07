@@ -1,0 +1,8 @@
+transaction_id,from_account,to_account,amount,timestamp,device_id
+T001,ACC_Alice,ACC_Bob,5000.00,2023-10-01T10:00:00,IPHONE_12
+T002,ACC_Bob,ACC_Charlie,2000.00,2023-10-01T10:15:00,IPHONE_12
+T003,ACC_Charlie,ACC_Alice,1000.00,2023-10-01T10:30:00,IPHONE_12
+transaction_id,from_account,to_account,amount,timestamp,device_id
+T101,user_rahul,user_amit,5000,2023-11-01T10:00:00,IPHONE_13
+T102,user_amit,user_priya,2000,2023-11-01T10:15:00,IPHONE_13
+T103,user_priya,user_rahul,1000,2023-11-01T10:30:00,IPHONE_13

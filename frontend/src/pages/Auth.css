@@ -1,0 +1,151 @@
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #050810;
+  background-image: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15), transparent 50%);
+}
+
+.auth-box {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  color: white;
+}
+
+.auth-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+/* TABS STYLING */
+.auth-tabs {
+  display: flex;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  margin-bottom: 25px;
+  padding: 5px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  color: #94A3B8;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.tab-btn.active {
+  background: #3B82F6;
+  color: white;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.auth-box h2 {
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 5px;
+}
+
+.auth-subtitle {
+  text-align: center;
+  color: #94A3B8;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  color: #64748B;
+}
+
+.input-group input, .input-group select {
+  width: 100%;
+  padding: 14px 14px 14px 45px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid #334155;
+  border-radius: 10px;
+  color: white;
+  font-size: 15px;
+  font-family: 'Inter', sans-serif;
+  transition: 0.2s;
+}
+
+.input-group input:focus, .input-group select:focus {
+  outline: none;
+  border-color: #3B82F6;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.select-group select {
+  padding-left: 15px; /* Dropdown mein icon nahi hai */
+  cursor: pointer;
+}
+
+.btn-auth-submit {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(90deg, #2563EB, #3B82F6);
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-auth-submit:hover {
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+  transform: translateY(-2px);
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 14px;
+  color: #94A3B8;
+}
+
+.auth-switch a {
+  color: #3B82F6;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}

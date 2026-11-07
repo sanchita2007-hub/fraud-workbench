@@ -1,0 +1,4 @@
+transaction_id,from_account,to_account,amount,timestamp,device_id
+T901,rahul_sharma,amit_verma,50000,2023-12-01T10:00:00,SAMSUNG_S23
+T902,amit_verma,priya_singh,20000,2023-12-01T10:15:00,SAMSUNG_S23
+T903,priya_singh,rahul_sharma,10000,2023-12-01T10:30:00,SAMSUNG_S23
