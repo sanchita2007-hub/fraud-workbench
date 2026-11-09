@@ -17,9 +17,10 @@ with engine.connect() as conn:
 app = FastAPI(title="Financial Fraud Workbench")
 
 # CORS Error Fix
+# Jab aap Vercel par deploy kar lein, toh "*" ki jagah apna Vercel URL daal dein (jaise ["https://your-app.vercel.app"])
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -32,8 +33,13 @@ app.include_router(alert_routes.router, prefix="/api/alerts", tags=["Alerts"])
 app.include_router(case_routes.router, prefix="/api/cases", tags=["Cases"])
 app.include_router(dashboard_routes.router, prefix="/api/dashboard", tags=["Dashboard"])
 app.include_router(auth_routes.router, prefix="/api/auth", tags=["Auth"])
-app.include_router(audit_routes.router, prefix="/api/audit", tags=["Audit"]) # Naya Route
+app.include_router(audit_routes.router, prefix="/api/audit", tags=["Audit"])
 
 @app.get("/")
 def read_root():
     return {"message": "Fraud Workbench API is running!"}
+
+# Health Check Route (Render ke liye zaroori hai)
+@app.get("/healthz")
+def health_check():
+    return {"status": "ok"}
