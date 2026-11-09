@@ -14,7 +14,8 @@ function GraphViewer() {
     setLoading(true);
     setSelectedNode(null);
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/graph/${accountId}`);
+      // NAYA RENDER URL YAHAN HAI
+      const response = await axios.get(`https://fraud-backend-0h4i.onrender.com/api/graph/${accountId}`);
       
       const uniqueLinks = Array.from(new Set(response.data.links.map(l => JSON.stringify(l)))).map(l => JSON.parse(l));
       const nodesMap = new Map();
@@ -159,7 +160,6 @@ function GraphViewer() {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       
-      {/* Top Toolbar */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <div style={{ display: 'flex', gap: '15px' }}>
           <input 
@@ -184,7 +184,6 @@ function GraphViewer() {
 
       <div style={{ display: 'flex', gap: '20px', flex: 1 }}>
         
-        {/* Graph Area */}
         <div style={{ flex: 1, background: '#0B1120', borderRadius: '12px', border: '1px solid #334155', overflow: 'hidden', position: 'relative' }}>
           
           <div style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 10, background: 'rgba(30, 41, 59, 0.8)', backdropFilter: 'blur(10px)', padding: '12px 20px', borderRadius: '10px', color: 'white', border: '1px solid #334155', fontSize: '13px' }}>
@@ -220,13 +219,12 @@ function GraphViewer() {
               onEngineStop={() => fgRef.current.zoomToFit(400, 100)} 
               
               width={800}
-              height={500} // Height kam ki taaki niche text box ke liye jagah mile
+              height={500}
               backgroundColor="#0B1120"
             />
           )}
         </div>
 
-        {/* Side Panel */}
         <div style={{ width: '300px', background: 'var(--bg-card)', borderRadius: '12px', border: '1px solid var(--border-color)', padding: '25px', display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
             <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '600' }}>Entity Profile</h3>
@@ -270,7 +268,6 @@ function GraphViewer() {
         </div>
       </div>
 
-      {/* 🔥 YEH HAI TEXT BOX JO LOOP SAMJHAYEGA 🔥 */}
       <div style={{ marginTop: '20px', background: 'var(--bg-card)', padding: '25px', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
         <h3 style={{ margin: '0 0 15px 0', display: 'flex', alignItems: 'center', gap: '10px' }}>
           <AlertTriangle color="var(--danger)" size={24} /> How Money is Circulating (Transaction Flow)

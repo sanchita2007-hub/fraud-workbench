@@ -3,17 +3,19 @@ import axios from 'axios';
 import { LayoutDashboard, AlertTriangle, Network, FolderOpen, Search, Download, CheckCircle, XCircle, Check, Trash2, LogOut, Activity } from 'lucide-react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import toast, { Toaster } from 'react-hot-toast'; // Naya Import
+import toast, { Toaster } from 'react-hot-toast';
 import './index.css';
 import GraphViewer from './components/GraphViewer';
 import Landing from './pages/Landing';
 import Documentation from './pages/Documentation';
 import AuthPage from './pages/AuthPage';
 
+// Yahan aapka naya Render URL set hai
+const API_URL = "https://fraud-backend-0h4i.onrender.com";
+
 function App() {
   return (
     <Router>
-      {/* Toast Notification Setup */}
       <Toaster 
         position="top-right" 
         toastOptions={{
@@ -130,11 +132,11 @@ function Dashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/dashboard/stats')
+    axios.get(`${API_URL}/api/dashboard/stats`)
       .then(res => setStats(res.data))
       .catch(err => console.error(err));
 
-    axios.get('http://127.0.0.1:8000/api/dashboard/charts')
+    axios.get(`${API_URL}/api/dashboard/charts`)
       .then(res => { setChartData(res.data); setLoading(false); })
       .catch(err => { console.error(err); setLoading(false); });
   }, []);
@@ -217,7 +219,7 @@ function Alerts() {
 
   const fetchAlerts = () => {
     setLoading(true);
-    axios.get('http://127.0.0.1:8000/api/alerts/')
+    axios.get(`${API_URL}/api/alerts/`)
       .then(res => { setAlerts(res.data); setLoading(false); })
       .catch(err => { console.error(err); setLoading(false); });
   };
@@ -225,34 +227,34 @@ function Alerts() {
   const runDetection = async () => {
     setIsDetecting(true);
     try {
-      await axios.post('http://127.0.0.1:8000/api/alerts/run');
-      toast.success("Detection Engine completed!"); // Toast
+      await axios.post(`${API_URL}/api/alerts/run`);
+      toast.success("Detection Engine completed!");
       setTimeout(() => {
         fetchAlerts();
         setIsDetecting(false);
       }, 500);
     } catch (err) {
-      toast.error("Detection failed. Backend error."); // Toast
+      toast.error("Detection failed. Backend error.");
       setIsDetecting(false);
     }
   };
 
   const createCase = async (alertItem) => {
     try {
-      await axios.post('http://127.0.0.1:8000/api/cases/', {
+      await axios.post(`${API_URL}/api/cases/`, {
         title: `Investigation: ${alertItem.alert_type} (${alertItem.account_id})`,
         linked_alert_id: alertItem.id
       });
       
-      await axios.post('http://127.0.0.1:8000/api/audit/', {
+      await axios.post(`${API_URL}/api/audit/`, {
         action: "Created Case",
         user: localStorage.getItem("userName") || "Unknown",
         details: `Alert ID: ${alertItem.id}`
       });
 
-      toast.success("Case created successfully! Check 'Case Management' tab."); // Toast
+      toast.success("Case created successfully! Check 'Case Management' tab.");
     } catch (error) {
-      toast.error("Failed to create case. Check backend."); // Toast
+      toast.error("Failed to create case. Check backend.");
     }
   };
 
@@ -307,58 +309,58 @@ function Cases() {
 
   const fetchCases = () => {
     setLoading(true);
-    axios.get('http://127.0.0.1:8000/api/cases/')
+    axios.get(`${API_URL}/api/cases/`)
       .then(res => { setCases(res.data); setLoading(false); })
       .catch(err => { console.error(err); setLoading(false); });
   };
 
   const markDecision = async (caseId, decision) => {
     try {
-      await axios.put(`http://127.0.0.1:8000/api/cases/${caseId}/decision`, { decision });
+      await axios.put(`${API_URL}/api/cases/${caseId}/decision`, { decision });
       
-      await axios.post('http://127.0.0.1:8000/api/audit/', {
+      await axios.post(`${API_URL}/api/audit/`, {
         action: decision,
         user: localStorage.getItem("userName") || "Unknown",
         details: `Case ID: ${caseId}`
       });
 
-      toast.success(`Case marked as: ${decision}`); // Toast
+      toast.success(`Case marked as: ${decision}`);
       fetchCases();
     } catch (error) {
-      toast.error("Failed to update decision"); // Toast
+      toast.error("Failed to update decision");
     }
   };
 
   const downloadEvidence = async (caseId) => {
     try {
-      const res = await axios.get(`http://127.0.0.1:8000/api/cases/${caseId}/export`);
+      const res = await axios.get(`${API_URL}/api/cases/${caseId}/export`);
       const blob = new Blob([JSON.stringify(res.data, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = `Case_${caseId}_Evidence.json`;
       a.click();
-      toast.success("Evidence downloaded!"); // Toast
+      toast.success("Evidence downloaded!");
     } catch (error) { 
-      toast.error("Export failed"); // Toast
+      toast.error("Export failed");
     }
   };
 
   const deleteCase = async (caseId) => {
     if(window.confirm("Are you sure you want to permanently delete this case?")) {
       try {
-        await axios.delete(`http://127.0.0.1:8000/api/cases/${caseId}`);
+        await axios.delete(`${API_URL}/api/cases/${caseId}`);
         
-        await axios.post('http://127.0.0.1:8000/api/audit/', {
+        await axios.post(`${API_URL}/api/audit/`, {
           action: "Deleted Case",
           user: localStorage.getItem("userName") || "Unknown",
           details: `Case ID: ${caseId}`
         });
 
-        toast.success("Case deleted successfully!"); // Toast
+        toast.success("Case deleted successfully!");
         fetchCases();
       } catch (error) {
-        toast.error("Failed to delete case."); // Toast
+        toast.error("Failed to delete case.");
       }
     }
   };
@@ -420,7 +422,7 @@ function AuditLogs() {
   const [logs, setLogs] = useState([]);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/audit/')
+    axios.get(`${API_URL}/api/audit/`)
       .then(res => setLogs(res.data))
       .catch(err => console.error(err));
   }, []);

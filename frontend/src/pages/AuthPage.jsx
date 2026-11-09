@@ -22,15 +22,15 @@ export default function AuthPage() {
 
     try {
       if (isLogin) {
-        // LOGIN
-        const res = await axios.post('http://127.0.0.1:8000/api/auth/login', { email, password });
+        // LOGIN (Naya Render URL)
+        const res = await axios.post('https://fraud-backend-0h4i.onrender.com/api/auth/login', { email, password });
         localStorage.setItem("token", res.data.access_token);
         localStorage.setItem("userName", res.data.user.name);
         localStorage.setItem("userRole", res.data.user.role);
         navigate('/dashboard');
       } else {
-        // SIGNUP
-        await axios.post('http://127.0.0.1:8000/api/auth/signup', { name, email, password, role });
+        // SIGNUP (Naya Render URL)
+        await axios.post('https://fraud-backend-0h4i.onrender.com/api/auth/signup', { name, email, password, role });
         alert("Account created successfully! Please login.");
         setIsLogin(true);
         setPassword('');
