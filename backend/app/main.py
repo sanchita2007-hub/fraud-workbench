@@ -16,11 +16,13 @@ with engine.connect() as conn:
 
 app = FastAPI(title="Financial Fraud Workbench")
 
-# CORS Error Fix
-# Jab aap Vercel par deploy kar lein, toh "*" ki jagah apna Vercel URL daal dein (jaise ["https://your-app.vercel.app"])
+# CORS Error Fix - Aapka Vercel URL yahan add kar diya hai
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], 
+    allow_origins=[
+        "https://fraud-workbench.vercel.app",
+        "http://localhost:5173"
+    ], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
