@@ -16,13 +16,16 @@ def get_db():
 
 @router.post("/upload")
 async def upload_csv(file: UploadFile = File(...), db: Session = Depends(get_db)):
-    os.makedirs("data/raw", exist_ok=True)
-    file_path = f"data/raw/{file.filename}"
+    # Render ki temporary directory use karein
+    temp_dir = "/tmp"
+    os.makedirs(temp_dir, exist_ok=True)
+    file_path = os.path.join(temp_dir, file.filename)
     
+    # File ko save karein
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     
-    # Call service
+    # Call service to process CSV
     result = process_csv_and_save(file_path, db, file.filename)
     
     if "error" in result:
